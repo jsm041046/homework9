@@ -30,6 +30,7 @@ Node* searchIterative(Node* head, int key);  /* search the node for the key */
 int freeBST(Node* head); /* free all memories allocated to the tree */
 
 /* you may add your own defined functions if necessary */
+void freeNode(Node* ptr);
 
 int main()
 {
@@ -261,5 +262,23 @@ Node* searchIterative(Node* head, int key)
 
 int freeBST(Node* head)
 {
+    if(head != NULL) //head가 가르키는 값이 있을 경우
+    {
+        if(head->left != NULL) //루트노드가 있을 경우
+            freeNode(head->left); //freeNode함수 호출
 
+        free(head); //head에 할댕된 메모리해제
+    }
+    
+}
+
+void freeNode(Node* ptr)
+{
+    //후위 순회방식을 이용한 노드 처리
+    if(ptr != NULL) //ptr이 가르키는 노드가 있을 경우
+    {
+        freeNode(ptr->left); //ptr의 왼쪽자식에게도 노드제거함수 호출
+        freeNode(ptr->right); //ptr의 오른쪽자식에게도 노드제거함수 호출
+        free(ptr); //ptr노드 메모리 해제
+    }
 }
